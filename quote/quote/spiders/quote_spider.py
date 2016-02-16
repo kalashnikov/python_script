@@ -9,15 +9,12 @@ class QuoteSpider(scrapy.Spider):
     name = "quote"
     allowed_domains = ["mingyan.xyzdict.com"]
     start_urls = [
-        "http://mingyan.xyzdict.com/mingren/"
+        "http://mingyan.xyzdict.com/mingren/?p="+str(i) for i in range(1, 27)
     ]
 
     def parse(self, response):
         for url in response.css('ul li a::attr("href")').re('.*/mingren/.*'):
             yield scrapy.Request(response.urljoin(url), self.parse_page)
-        # for href in response.xpath('//ul/li/a/@href'):
-        #     url = response.urljoin(href.extract()
-        #     yield scrapy.Request(url, callback=self.parse_page)
 
     def parse_page(self, response):
         author = response.xpath('//span/text()').extract()[0]
@@ -27,5 +24,10 @@ class QuoteSpider(scrapy.Spider):
             if not quote['w']:
                 continue
             quote['w'] = quote['w'][0]
+            quote['u'] = sel.xpath('a/@href').extract()
+            if not quote['u']:
+                continue
+            quote['u'] = quote['u'][0]
             quote['a'] = author
+            print quote['w'], quote['a'], quote['u']
             yield quote

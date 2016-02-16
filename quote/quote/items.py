@@ -12,4 +12,5 @@ class QuoteItem(scrapy.Item):
     # define the fields for your item here like:
     w = scrapy.Field()
     a = scrapy.Field()
+    u = scrapy.Field()
     pass
