@@ -1,3 +1,4 @@
-# -*- coding: utf-8 -*-
 
-print ["http://mingyan.xyzdict.com/mingren/?p="+str(i) for i in range(1, 27)]
+v1, v2, v3 = '483442/483487/483487'.split('/')
+
+print(v1, v2, v3)
